@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciador Financeiro</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">Gerenciador Financeiro</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Adicionar Dívida</h2>
+            <form th:action="@{/adicionarDivida}" th:object="${novaDivida}" method="post">
+                <div class="form-group">
+                    <label for="nome">Nome:</label>
+                    <input type="text" class="form-control" id="nome" th:field="*{nome}" required>
+                </div>
+                <div class="form-group">
+                    <label for="valor">Valor:</label>
+                    <input type="number" class="form-control" id="valor" th:field="*{valor}" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="diaDaCobranca">Dia da Cobrança:</label>
+                    <input type="number" class="form-control" id="diaDaCobranca" th:field="*{diaDaCobranca}" required>
+                </div>
+                <div class="form-group">
+                    <label for="dataInicio">Data de Início:</label>
+                    <input type="date" class="form-control" id="dataInicio" th:field="*{dataInicio}" required>
+                </div>
+                <div class="form-group">
+                    <label for="dataFim">Data de Fim:</label>
+                    <input type="date" class="form-control" id="dataFim" th:field="*{dataFim}" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Adicionar Dívida</button>
+            </form>
+        </div>
+
+        <div class="col-md-6">
+            <h2>Atualizar Registro Financeiro</h2>
+            <form th:action="@{/atualizarRegistroFinanceiro}" th:object="${registroFinanceiro}" method="post">
+                <div class="form-group">
+                    <label for="salario">Salário:</label>
+                    <input type="number" class="form-control" id="salario" th:field="*{salario}" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="economias">Economias:</label>
+                    <input type="number" class="form-control" id="economias" th:field="*{economias}" step="0.01" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Atualizar Registro</button>
+            </form>
+
+            <h3 class="mt-4">Adicionar Entrada Extra</h3>
+            <form th:action="@{/adicionarEntradaExtra}" method="post">
+                <div class="form-group">
+                    <label for="entradaExtra">Valor:</label>
+                    <input type="number" class="form-control" id="entradaExtra" name="valor" step="0.01" required>
+                </div>
+                <button type="submit" class="btn btn-success">Adicionar Entrada Extra</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <h2>Resumo Financeiro</h2>
+        <p>Salário Atual: R$ <span th:text="${#numbers.formatDecimal(registroFinanceiro.salario, 1, 'POINT', 2, 'COMMA')}"></span></p>
+        <p>Economias: R$ <span th:text="${#numbers.formatDecimal(registroFinanceiro.economias, 1, 'POINT', 2, 'COMMA')}"></span></p>
+        <p>Entrada Extra: R$ <span th:text="${#numbers.formatDecimal(registroFinanceiro.entradaExtra, 1, 'POINT', 2, 'COMMA')}"></span></p>
+        <p>Saldo Mensal: R$ <span th:text="${#numbers.formatDecimal(saldoMensal, 1, 'POINT', 2, 'COMMA')}"></span></p>
+    </div>
+
+    <div class="mt-5">
+        <h2>Lista de Dívidas Atuais</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Valor</th>
+                <th>Dia da Cobrança</th>
+                <th>Data de Início</th>
+                <th>Data de Fim</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="divida : ${dividas}">
+                <td th:text="${divida.nome}"></td>
+                <td th:text="${#numbers.formatDecimal(divida.valor, 1, 'POINT', 2, 'COMMA')}"></td>
+                <td th:text="${divida.diaDaCobranca}"></td>
+                <td th:text="${#temporals.format(divida.dataInicio, 'dd/MM/yyyy')}"></td>
+                <td th:text="${#temporals.format(divida.dataFim, 'dd/MM/yyyy')}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-5">
+        <form th:action="@{/processarFimDoMes}" method="post">
+            <button type="submit" class="btn btn-warning">Processar Fim do Mês</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+
