@@ -12,21 +12,21 @@ public class Divida {
 
     private String nome;
     private BigDecimal valor;
-    private int diaDaCobranca;
     private LocalDate dataInicio;
     private LocalDate dataFim;
 
-    public Divida() {}
+    public Divida() {
+        this.dataInicio = LocalDate.now(); // Set dataInicio to the current date
+    }
 
-    public Divida(String nome, BigDecimal valor, int diaDaCobranca, LocalDate dataInicio, LocalDate dataFim) {
+    public Divida(String nome, BigDecimal valor, LocalDate dataInicio, LocalDate dataFim) {
         this.nome = nome;
         this.valor = valor;
-        this.diaDaCobranca = diaDaCobranca;
-        this.dataInicio = dataInicio;
+        this.dataInicio = dataInicio != null ? dataInicio : LocalDate.now(); // Set dataInicio to the current date if not provided
         this.dataFim = dataFim;
     }
 
-    // Getters e Setters
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -51,14 +51,6 @@ public class Divida {
         this.valor = valor;
     }
 
-    public int getDiaDaCobranca() {
-        return diaDaCobranca;
-    }
-
-    public void setDiaDaCobranca(int diaDaCobranca) {
-        this.diaDaCobranca = diaDaCobranca;
-    }
-
     public LocalDate getDataInicio() {
         return dataInicio;
     }
@@ -75,4 +67,3 @@ public class Divida {
         this.dataFim = dataFim;
     }
 }
-
