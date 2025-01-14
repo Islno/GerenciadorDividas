@@ -66,7 +66,7 @@
         <h2>Resumo Financeiro</h2>
         <p>Salário Atual: R$ <span th:text="${#numbers.formatDecimal(registroFinanceiro.salario, 1, 'POINT', 2, 'COMMA')}"></span></p>
         <p>Economias: R$ <span th:text="${#numbers.formatDecimal(registroFinanceiro.economias, 1, 'POINT', 2, 'COMMA')}"></span></p>
-        <p>Entrada Extra: R$ <span th:text="${#numbers.formatDecimal(registroFinanceiro.entradaExtra, 1, 'POINT', 2, 'COMMA')}"></span></p>
+        <p>Entrada extra.: R$ <span th:text="${#numbers.formatDecimal(registroFinanceiro.entradaExtra, 1, 'POINT', 2, 'COMMA')}"></span></p>
         <p>Saldo Mensal: R$ <span th:text="${#numbers.formatDecimal(saldoMensal, 1, 'POINT', 2, 'COMMA')}"></span></p>
     </div>
 
